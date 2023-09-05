@@ -1,21 +1,18 @@
 <h1>Crypto</h1>
 
 
-<ul>
-  <li *ngFor="let crypto of cryptoRepository.cryptos$ | async">
+<div class="demo-button-container">
+  <button (click)="addCryptoCurrency()" mat-raised-button  class="demo-button">
+    Add data
+  </button>
 
-    <a> sds {{ crypto.name }} </a>
-
-
-  </li>
-
-
-</ul>
+</div>
 <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <!-- Position Column -->
   <ng-container matColumnDef="Id">
     <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
     <mat-cell *matCellDef="let crypto"> {{crypto.id}} </mat-cell>
+
   </ng-container>
 
   <!-- Name Column -->
@@ -35,6 +32,23 @@
     <mat-header-cell *matHeaderCellDef> Current Price </mat-header-cell>
     <mat-cell *matCellDef="let crypto"> {{crypto.currentPrice}} </mat-cell>
   </ng-container>
+
+  <ng-container matColumnDef="Editar">
+    <mat-header-cell *matHeaderCellDef> Editar</mat-header-cell>
+    <mat-cell *matCellDef="let crypto">
+      <button >Edit</button>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Borrar">
+    <mat-header-cell *matHeaderCellDef> Borrar</mat-header-cell>
+
+    <mat-cell *matCellDef="let crypto">
+      <button >Delete</button>
+    </mat-cell>
+  </ng-container>
+
+
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

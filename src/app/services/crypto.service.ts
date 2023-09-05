@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient}   from "@angular/common/http";
-import {map, Observable, tap} from "rxjs";
+import {map, tap} from "rxjs";
 import {Cryptocurrency} from "../model/cryptocurrency";
 import {ApiResponse} from "../model/apiResponse";
 import {CryptocurrencyRepository} from "../repository/cryptocurrencyRepository";
@@ -20,6 +20,16 @@ export class CryptoService {
       map((response: ApiResponse<Cryptocurrency[]>) => response.response || []),
       tap((cryptos) => this.cryptoRepository.setCryptos(cryptos))
     );
+  }
+
+  addCryptoCurrency(name : String) {
+    return this.httpClient.post(this.API_URL, {name: name}).pipe
+      (
+        tap((crypto) => this.cryptoRepository.addCryptoCurrency(crypto as Cryptocurrency)
+        )
+
+      );
+
   }
 
 }

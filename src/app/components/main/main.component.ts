@@ -1,7 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {MatTableModule} from "@angular/material/table";
 import {CryptocurrencyRepository} from "../../repository/cryptocurrencyRepository";
-import {Cryptocurrency} from "../../model/cryptocurrency";
 import {CryptoService} from "../../services/crypto.service";
 
 @Component({
@@ -21,7 +19,18 @@ export class MainComponent {
 
   }
 
-  displayedColumns = ['Id', 'Name', 'Symbol', 'Current Price'];
+  displayedColumns = ['Id', 'Name', 'Symbol', 'Current Price', 'Editar', 'Borrar'];
+
+  addCryptoCurrency() {
+    const cryptoName = prompt("Ingrese el nombre de la criptomoneda");
+
+    if (cryptoName !== null) {
+      console.log("Nombre de la criptomoneda ingresado:", cryptoName);
+
+      this.cryptoService.addCryptoCurrency(cryptoName).subscribe();
+
+    }
+  }
 
 
 }

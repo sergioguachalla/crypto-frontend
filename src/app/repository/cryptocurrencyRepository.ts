@@ -1,39 +1,38 @@
-import { createStore, select } from '@ngneat/elf';
+import {createStore, select, withProps} from '@ngneat/elf';
 
 import {
   addEntities,
   selectAllEntities,
   selectAllEntitiesApply,
-  updateEntities, withEntities,
+  updateEntities, upsertEntities, withEntities,
 } from '@ngneat/elf-entities';
 import {inject, Injectable} from "@angular/core";
 
-import {ApiResponse} from "../model/apiResponse";
 import {Cryptocurrency} from "../model/cryptocurrency";
-import {Observable} from "rxjs";
 
+
+export interface CryptoProps {
+  name: string;
+
+
+}
 
 
 const cryptoStore = createStore(
   {name : 'cryptoStore'},
-  withEntities<Cryptocurrency>()
+  withEntities<Cryptocurrency>(),
+  withProps<CryptoProps>({name: ''})
 );
 
 @Injectable({ providedIn: 'root' })
 export class CryptocurrencyRepository {
 
 
-
   cryptos$ = cryptoStore.pipe(selectAllEntities());
 
-
   addCryptoCurrency(crypto: Cryptocurrency) {
-    cryptoStore.update(addEntities([crypto]));
-
+    cryptoStore.update(addEntities(crypto));
   }
-
-
-
 
   setCryptos(cryptos: Cryptocurrency[]) {
     console.log(cryptos);
