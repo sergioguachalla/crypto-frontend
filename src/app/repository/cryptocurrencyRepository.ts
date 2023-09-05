@@ -7,15 +7,12 @@ import {
   updateEntities, withEntities,
 } from '@ngneat/elf-entities';
 import {inject, Injectable} from "@angular/core";
-import {CryptoService} from "../services/crypto.service";
 
-interface Cryptocurrency {
-  id: number;
-  name: string;
-  symbol: string;
-  currentPrice: number;
+import {ApiResponse} from "../model/apiResponse";
+import {Cryptocurrency} from "../model/cryptocurrency";
+import {Observable} from "rxjs";
 
-}
+
 
 const cryptoStore = createStore(
   {name : 'cryptoStore'},
@@ -25,9 +22,9 @@ const cryptoStore = createStore(
 @Injectable({ providedIn: 'root' })
 export class CryptocurrencyRepository {
 
-  cryptoService: CryptoService = inject(CryptoService);
 
-  cryptos$ = this.cryptoService.getAllCryptocurrencies()
+
+  cryptos$ = cryptoStore.pipe(selectAllEntities());
 
 
   addCryptoCurrency(crypto: Cryptocurrency) {
@@ -35,14 +32,21 @@ export class CryptocurrencyRepository {
 
   }
 
-  getAllCryptocurrencies() {
-    return this.cryptoService.getAllCryptocurrencies().subscribe((data: Cryptocurrency[]) => {
-      cryptoStore.update(addEntities(data));
-      console.log(data);
-    }
-    );
 
 
+
+  setCryptos(cryptos: Cryptocurrency[]) {
+    console.log(cryptos);
+    cryptoStore.update(addEntities(cryptos));
   }
+
 }
+
+
+
+
+
+
+
+
 

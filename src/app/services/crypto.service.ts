@@ -1,19 +1,25 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient}   from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable, tap} from "rxjs";
 import {Cryptocurrency} from "../model/cryptocurrency";
-
+import {ApiResponse} from "../model/apiResponse";
+import {CryptocurrencyRepository} from "../repository/cryptocurrencyRepository";
 @Injectable({
   providedIn: 'root'
 })
 export class CryptoService {
   API_URL = 'http://localhost:8080/api/v1/cryptocurrency';
-
-  constructor(private httpClient: HttpClient) {
+  private httpClient: HttpClient = inject(HttpClient);
+  private cryptoRepository: CryptocurrencyRepository = inject(CryptocurrencyRepository);
+  constructor() {
 
   }
 
-  getAllCryptocurrencies(): Observable<Cryptocurrency[]> {
-    return this.httpClient.get<Cryptocurrency[]>(this.API_URL);
+  getCryptocurrencies() {
+    return this.httpClient.get<ApiResponse<Cryptocurrency[]>>(this.API_URL).pipe(
+      map((response: ApiResponse<Cryptocurrency[]>) => response.response || []),
+      tap((cryptos) => this.cryptoRepository.setCryptos(cryptos))
+    );
   }
+
 }
