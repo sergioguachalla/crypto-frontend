@@ -3,7 +3,7 @@ import {createStore, select, withProps} from '@ngneat/elf';
 import {
   addEntities,
   selectAllEntities,
-  selectAllEntitiesApply,
+  selectAllEntitiesApply, setEntities,
   updateEntities, upsertEntities, withEntities,
 } from '@ngneat/elf-entities';
 import {inject, Injectable} from "@angular/core";
@@ -31,12 +31,33 @@ export class CryptocurrencyRepository {
   cryptos$ = cryptoStore.pipe(selectAllEntities());
 
   addCryptoCurrency(crypto: Cryptocurrency) {
-    cryptoStore.update(addEntities(crypto));
+    cryptoStore.update(addEntities({
+      id: crypto.id,
+      name: crypto.name,
+      symbol: crypto.symbol,
+      currentPrice: crypto.currentPrice,
+      status: crypto.status
+    })
+    );
+    console.log(crypto);
   }
 
   setCryptos(cryptos: Cryptocurrency[]) {
     console.log(cryptos);
-    cryptoStore.update(addEntities(cryptos));
+    cryptoStore.update(setEntities(cryptos));
+
+  }
+  updateCryptoCurrency( crypto: Cryptocurrency) {
+   cryptoStore.update((state => ({
+      ...state,
+     crypto
+   })));
+    //cryptoStore.update(updateEntities([crypto.id], (entity) => ({...entity, currentPrice: crypto.currentPrice})));
+  }
+
+  deleteCryptoCurrency(crypto: Cryptocurrency) {
+    cryptoStore.update(updateEntities(crypto.id, (entity) => ({...entity, status: false})));
+
   }
 
 }

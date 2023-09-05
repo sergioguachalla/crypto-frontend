@@ -36,7 +36,7 @@
   <ng-container matColumnDef="Editar">
     <mat-header-cell *matHeaderCellDef> Editar</mat-header-cell>
     <mat-cell *matCellDef="let crypto">
-      <button >Edit</button>
+      <button (click)="updatePrice(crypto.id)">Edit</button>
     </mat-cell>
   </ng-container>
 
@@ -44,7 +44,7 @@
     <mat-header-cell *matHeaderCellDef> Borrar</mat-header-cell>
 
     <mat-cell *matCellDef="let crypto">
-      <button >Delete</button>
+      <button (click)="deleteCryptoCurrency(crypto.id)" >Delete</button>
     </mat-cell>
   </ng-container>
 

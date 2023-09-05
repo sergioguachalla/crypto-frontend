@@ -11,9 +11,9 @@ export class MainComponent {
 
 
   cryptoService : CryptoService = inject(CryptoService);
-  constructor(public cryptoRepository: CryptocurrencyRepository) {
+  constructor() {
   }
-  dataSource = this.cryptoRepository.cryptos$;
+  dataSource = inject(CryptocurrencyRepository).cryptos$;
   ngOnInit(): void {
     this.cryptoService.getCryptocurrencies().subscribe();
 
@@ -30,6 +30,23 @@ export class MainComponent {
       this.cryptoService.addCryptoCurrency(cryptoName).subscribe();
 
     }
+  }
+
+  updatePrice(cryptoId: number) {
+    const cryptoPrice = prompt("Ingrese el precio de la criptomoneda");
+
+    if (cryptoPrice !== null) {
+      console.log("Precio de la criptomoneda ingresado:", cryptoPrice);
+
+      this.cryptoService.updateCryptoCurrency(cryptoId, Number(cryptoPrice));
+      this.cryptoService.getCryptocurrencies().subscribe();
+
+    }
+  }
+
+  deleteCryptoCurrency(cryptoId: number) {
+    this.cryptoService.deleteCryptoCurrency(cryptoId).subscribe();
+    alert("La criptomoneda ha sido eliminada");
   }
 
 
