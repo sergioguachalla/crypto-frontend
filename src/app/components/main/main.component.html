@@ -1,0 +1,16 @@
+<h1>Crypto</h1>
+
+
+<ul>
+  <li *ngFor="let crypto of cryptoRepository.cryptos$ | async">
+
+    {{ crypto.name }}
+    {{ crypto.symbol }}
+
+
+  </li>
+
+
+</ul>
+
+

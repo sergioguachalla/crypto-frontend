@@ -6,8 +6,8 @@ import {
   selectAllEntitiesApply,
   updateEntities, withEntities,
 } from '@ngneat/elf-entities';
-import {Injectable} from "@angular/core";
-
+import {inject, Injectable} from "@angular/core";
+import {CryptoService} from "../services/crypto.service";
 
 interface Cryptocurrency {
   id: number;
@@ -24,8 +24,25 @@ const cryptoStore = createStore(
 
 @Injectable({ providedIn: 'root' })
 export class CryptocurrencyRepository {
-  cryptos$ = cryptoStore.pipe(selectAllEntities());
+
+  cryptoService: CryptoService = inject(CryptoService);
+
+  cryptos$ = this.cryptoService.getAllCryptocurrencies()
 
 
+  addCryptoCurrency(crypto: Cryptocurrency) {
+    cryptoStore.update(addEntities([crypto]));
+
+  }
+
+  getAllCryptocurrencies() {
+    return this.cryptoService.getAllCryptocurrencies().subscribe((data: Cryptocurrency[]) => {
+      cryptoStore.update(addEntities(data));
+      console.log(data);
+    }
+    );
+
+
+  }
 }
 
