@@ -11,5 +11,32 @@
 
 
 </ul>
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Position Column -->
+  <ng-container matColumnDef="Id">
+    <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+    <mat-cell *matCellDef="let crypto"> {{crypto.id}} </mat-cell>
+  </ng-container>
 
+  <!-- Name Column -->
+  <ng-container matColumnDef="Name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let crypto"> {{crypto.name}} </mat-cell>
+  </ng-container>
+
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="Symbol">
+    <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+    <mat-cell *matCellDef="let crypto"> {{crypto.symbol}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Current Price">
+    <mat-header-cell *matHeaderCellDef> Current Price </mat-header-cell>
+    <mat-cell *matCellDef="let crypto"> {{crypto.currentPrice}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
 

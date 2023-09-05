@@ -11,16 +11,17 @@ import {CryptoService} from "../../services/crypto.service";
 })
 export class MainComponent {
 
+
   cryptoService : CryptoService = inject(CryptoService);
   constructor(public cryptoRepository: CryptocurrencyRepository) {
   }
-
+  dataSource = this.cryptoRepository.cryptos$;
   ngOnInit(): void {
     this.cryptoService.getCryptocurrencies().subscribe();
 
   }
 
-  displayedColumns = ['id', 'name', 'symbol', 'currentPrice'];
+  displayedColumns = ['Id', 'Name', 'Symbol', 'Current Price'];
 
 
 }
