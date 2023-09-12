@@ -8,7 +8,7 @@ import {CryptocurrencyRepository} from "../repository/cryptocurrencyRepository";
   providedIn: 'root'
 })
 export class CryptoService {
-  API_URL = 'http://localhost:8080/api/v1/cryptocurrency';
+  API_URL = 'http://localhost:8081/api/v1/cryptocurrency';
   private httpClient: HttpClient = inject(HttpClient);
   private cryptoRepository: CryptocurrencyRepository = inject(CryptocurrencyRepository);
   constructor() {
