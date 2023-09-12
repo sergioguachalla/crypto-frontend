@@ -35,8 +35,15 @@ export class AuthGuard extends KeycloakAuthGuard {
     if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
       return true;
     }
+     // Allow the user to proceed if all the required roles are present.
+     const hasRequiredRoles = requiredRoles.every((role) => this.roles.includes(role));
+    
+     // Si el usuario no tiene los roles requeridos, redirige a OtroComponent
+     if (!hasRequiredRoles) {
+       this.router.navigate(['/forbidden']); // Cambia 'otro-component' por la ruta real de tu componente
+     }
 
     // Allow the user to proceed if all the required roles are present.
-    return requiredRoles.every((role) => this.roles.includes(role));
+    return hasRequiredRoles
   }
 }
