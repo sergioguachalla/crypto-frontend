@@ -6,7 +6,7 @@ import { ForbiddenComponent } from '../components/forbidden/forbidden.component'
 
 const routes: Routes = [
   {
-    path: 'cryptos',
+    path: 'crypto-list',
     component: MainComponent,
     canActivate: [AuthGuard],
     data: {

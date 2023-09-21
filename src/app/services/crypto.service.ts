@@ -1,9 +1,10 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient}   from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map, Observable, tap} from "rxjs";
 import {Cryptocurrency} from "../model/cryptocurrency";
-import {ApiResponse} from "../model/apiResponse";
+import {ApiResponse} from "../model/paginator";
 import {CryptocurrencyRepository} from "../repository/cryptocurrencyRepository";
+import {Paginator} from "../model/paginator";
 @Injectable({
   providedIn: 'root'
 })
@@ -15,13 +16,25 @@ export class CryptoService {
 
   }
 
-  getCryptocurrencies() {
-    return this.httpClient.get<ApiResponse<Cryptocurrency[]>>(this.API_URL).pipe(
-      map((response: ApiResponse<Cryptocurrency[]>) => response.response || []),
-      tap((cryptos) => this.cryptoRepository.setCryptos(cryptos))
+  getCryptocurrencies(page: number, size:number) {
+
+    let httpHeader = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
     );
+
+    return this.httpClient.get<ApiResponse<Paginator<Cryptocurrency>>>(`${this.API_URL}?page=${page}&size=${size}` , {headers: httpHeader})
+      .pipe(
+        tap((response) => {
+
+          this.cryptoRepository.setCryptos(response.response)
+        }
+      )
+      );
   }
 
+
+  /*
   addCryptoCurrency(name: string): Observable<Cryptocurrency | null> {
     return this.httpClient.post<ApiResponse<Cryptocurrency>>(this.API_URL, { name }).pipe(
       map((response: ApiResponse<Cryptocurrency>) => response.response),
@@ -33,10 +46,34 @@ export class CryptoService {
     );
   }
 
+   */
+
+  addCryptoCurrency(name: string) {
+    this.httpClient.post<ApiResponse<String>>(this.API_URL, {name}).pipe(
+      map((response: ApiResponse<String>) => response.response)
+    ).subscribe((response) => {
+        alert(response);
+        this.getCryptocurrencies(0, 5).subscribe();
+      }
+    );
+  }
+
+
+
   updateCryptoCurrency(cryptoId: number, price: number) {
-    return this.httpClient.put(this.API_URL + "/" + cryptoId + "/price", {currentPrice: price}).pipe(
-      tap((crypto) => this.cryptoRepository.updateCryptoCurrency(crypto as Cryptocurrency))
-    ).subscribe();
+     this.httpClient.put<ApiResponse<String>>(`${this.API_URL}/${cryptoId}/price`, {currentPrice: price}).pipe(
+      map((response: ApiResponse<String>) => response.response)
+    ).subscribe((response) => {
+        alert(response);
+        this.getCryptocurrencies(0, 5).subscribe();
+      }
+    );
+  }
+
+
+  /*
+
+
   }
 
   deleteCryptoCurrency(cryptoId: number) {
@@ -44,5 +81,7 @@ export class CryptoService {
       tap((crypto) => this.cryptoRepository.deleteCryptoCurrency(crypto as Cryptocurrency ))
     );
   }
+
+   */
 
 }

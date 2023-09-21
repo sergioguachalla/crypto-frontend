@@ -1,4 +1,4 @@
-import {createStore, select, withProps} from '@ngneat/elf';
+import {createStore, select, setProp, setProps, withProps} from '@ngneat/elf';
 
 import {
   addEntities,
@@ -9,29 +9,36 @@ import {
 import {inject, Injectable} from "@angular/core";
 
 import {Cryptocurrency} from "../model/cryptocurrency";
+import {ApiResponse, Paginator} from "../model/paginator";
 
 
 export interface CryptoProps {
-  name: string;
+  totalElements: number;
+  totalPages: number;
+  currentPage: number;
 
 
 }
 
 
-const cryptoStore = createStore(
-  {name : 'cryptoStore'},
+const store = createStore(
+  {name : 'cryptocurrency'},
   withEntities<Cryptocurrency>(),
-  withProps<CryptoProps>({name: ''})
+  withProps<CryptoProps>({totalElements: 0, totalPages: 0, currentPage: 0}),
 );
 
 @Injectable({ providedIn: 'root' })
 export class CryptocurrencyRepository {
 
 
-  cryptos$ = cryptoStore.pipe(selectAllEntities());
+  cryptos$ = store.pipe(selectAllEntities());
+
+  getCurrencyProps(){
+    return store.query((state) => state);
+  }
 
   addCryptoCurrency(crypto: Cryptocurrency) {
-    cryptoStore.update(addEntities({
+    store.update(addEntities({
       id: crypto.id,
       name: crypto.name,
       symbol: crypto.symbol,
@@ -39,16 +46,24 @@ export class CryptocurrencyRepository {
       status: crypto.status
     })
     );
+
     console.log(crypto);
   }
 
-  setCryptos(cryptos: Cryptocurrency[]) {
-    console.log(cryptos);
-    cryptoStore.update(setEntities(cryptos));
+  setCryptos(response: Paginator<Cryptocurrency>) {
+
+    store.update(setEntities(response.content),
+      setProps({
+        currentPage: response.number,
+        totalElements: response.totalElements,
+        totalPages: response.totalPages,
+      })
+    );
 
   }
-  updateCryptoCurrency( crypto: Cryptocurrency) {
-   cryptoStore.update((state => ({
+
+  updateCryptoCurrency( response: Paginator<Cryptocurrency>) {
+   store.update((state => ({
       ...state,
      crypto
    })));
@@ -56,7 +71,7 @@ export class CryptocurrencyRepository {
   }
 
   deleteCryptoCurrency(crypto: Cryptocurrency) {
-    cryptoStore.update(updateEntities(crypto.id, (entity) => ({...entity, status: false})));
+    store.update(updateEntities(crypto.id, (entity) => ({...entity, status: false})));
 
   }
 

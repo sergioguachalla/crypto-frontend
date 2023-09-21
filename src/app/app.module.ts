@@ -11,18 +11,31 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatButtonModule} from "@angular/material/button";
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
-function initializeKeycloak(keycloak: KeycloakService) {
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {async} from "rxjs";
+function  initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
         url: 'http://localhost:8080',
-        realm: 'crypto-angular',
-        clientId: 'cryptocurrency'
+        realm: 'arquitectura',
+        clientId: 'frontend'
       },
       initOptions: {
-        onLoad: 'check-sso',
+        onLoad: 'login-required',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html'
+      },
+      shouldAddToken: (request) => {
+        const { method, url } = request;
+
+        const isGetRequest = 'GET' === method.toUpperCase();
+        const acceptablePaths = ['http://localhost:8081/api/v1/auth/token', 'http://localhost:8081/api/v1/cryptocurrency'];
+        const isAcceptablePathMatch = acceptablePaths.some((path) =>
+          url.includes(path)
+        );
+
+        return !(isGetRequest && isAcceptablePathMatch);
       }
     });
 }
@@ -40,7 +53,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HttpClientModule,
     MatButtonModule,
     KeycloakAngularModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatPaginatorModule
   ],
   providers: [
     {
