@@ -44,13 +44,33 @@ export class CryptoService {
 
 
   updateCryptoCurrency(cryptoId: number, price: number) {
-     this.httpClient.put<ApiResponse<String>>(`${this.API_URL}/${cryptoId}/price`, {currentPrice: price}).pipe(
-      map((response: ApiResponse<String>) => response.response)
-    ).subscribe((response) => {
-        alert(response);
-        this.getCryptocurrencies(0, 5).subscribe();
-      }
-    );
+    this.httpClient
+      .put<ApiResponse<String>>(`${this.API_URL}/${cryptoId}/price`, {
+        currentPrice: price,
+      })
+      .pipe(
+        map((response: ApiResponse<String>) => response.response),
+        tap((response) => {
+          alert(response);
+          this.getCryptocurrencies(this.cryptoRepository.getCurrencyProps().currentPage, 5).subscribe();
+        })
+      )
+      .subscribe();
+  }
+
+  deleteCryptoCurrency(cryptoId: number) {
+    this.httpClient
+      .put<ApiResponse<String>>(`${this.API_URL}/${cryptoId}`, {
+        id: cryptoId,
+      })
+      .pipe(
+        map((response: ApiResponse<String>) => response.response),
+        tap((response) => {
+          alert(response);
+          this.getCryptocurrencies(this.cryptoRepository.getCurrencyProps().currentPage, 5).subscribe();
+        })
+      )
+      .subscribe();
   }
 
 

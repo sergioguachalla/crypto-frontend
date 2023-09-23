@@ -1,23 +1,25 @@
-<h1>Crypto</h1>
+<h1>Lista de Criptomonedas</h1>
 
 
 <div class="demo-button-container">
-  <button (click)="addCryptoCurrencyDialog()" mat-raised-button  class="demo-button">
-    Añadir Criptomoneda
-  </button>
 
+  <button mat-button [matMenuTriggerFor]="menu">Añadir Criptomoneda</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/add-crypto']">Crear Criptomoneda</button>
+    <button mat-menu-item (click)="addCryptoCurrencyDialog()">Añadir Criptomoneda</button>
+  </mat-menu>
 </div>
-<ng-container *ngIf="isLoading$">
-  <h3>Cargando los datos...</h3>
-  <ngx-skeleton-loader [theme]="{height: '20px', background: '#CED9DE'}"  ></ngx-skeleton-loader>
+<!--<ng-container *ngIf="isLoading$">-->
+<!--  <h3>Cargando los datos...</h3>-->
+<!--  <ngx-skeleton-loader [theme]="{height: '20px', background: '#CED9DE'}"  ></ngx-skeleton-loader>-->
+<!--</ng-container>-->
 
-</ng-container>
+<ng-container *ngIf="!isLoading$">
 
 <mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="!isLoading$">
   <!-- Position Column -->
   <ng-container matColumnDef="Id">
     <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-
     <mat-cell *matCellDef="let crypto">
       <div *ngIf="crypto">{{crypto.id}}</div>
     </mat-cell>
@@ -55,20 +57,23 @@
     <mat-header-cell *matHeaderCellDef> Borrar</mat-header-cell>
 
     <mat-cell *matCellDef="let crypto">
-      <button (click)="updateCryptoPrice(crypto.id)" mat-icon-button>
+      <button (click)="deleteCryptoCurrency(crypto.id)" mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>
     </mat-cell>
   </ng-container>
 
-
-
-
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
 </mat-table>
+</ng-container>
+<ng-container *ngIf="isLoading$">
+  <h3>Cargando los datos...</h3>
+  <ngx-skeleton-loader [theme]="{height: '20px', background: '#CED9DE'}"></ngx-skeleton-loader>
+
+</ng-container>
 <mat-paginator [pageSizeOptions]="[5]" [length]="maxSize" (page)="pageChangeEvent($event)" showFirstLastButtons></mat-paginator>
-<button (click)="logout()" mat-raised-button color="warn">Cerrar Sesión</button>
+
 
 

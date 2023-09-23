@@ -33,7 +33,7 @@ export class MainComponent {
     this.cryptocurrencyRepository.setUIState(true, null);
     setTimeout(() => {
       this.cryptoService.getCryptocurrencies(0, 5).subscribe();
-    }, 2000);
+    }, 600);
     this.cryptos$
       .subscribe((response) => {
         const currencyProps = this.cryptocurrencyRepository.getCurrencyProps();
@@ -48,20 +48,10 @@ export class MainComponent {
     this.cryptoService.getCryptocurrencies($event.pageIndex, 5).subscribe();
   }
 
-
-
-  addCryptoCurrency() {
-    const cryptoName = prompt("Ingrese el nombre de la criptomoneda");
-    if (cryptoName !== null) {
-
-      (this.cryptoService.addCryptoCurrency(cryptoName));
-
-    }
-  }
-
   addCryptoCurrencyDialog() {
     const dialogRef = this.dialog.open(DialogComponent,{
-      data: {tittle: "Agregar Criptomoneda"}
+      data: {tittle: "Agregar Criptomoneda",
+        type: "add"}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -74,15 +64,47 @@ export class MainComponent {
   }
 
   updateCryptoPrice(id: number){
-    const newPrice = prompt("Ingrese el nuevo precio de la criptomoneda");
-    console.log("id: ", id);
-    this.cryptoService.updateCryptoCurrency(id, Number(newPrice));
+    const dialogRef = this.dialog.open(DialogComponent,{
+      data: {tittle: "Editar Criptomoneda",
+        type: "edit" }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined){
+        setTimeout(() => {
+          this.cryptoService.updateCryptoCurrency(id, Number(result));
+          this.cryptos$.subscribe((response) => {
+            this.dataSource.data =  response;
+          });
+
+        }, 400);
+      }
+    });
+
   }
 
-  logout() {
-    this.keycloakService.logout().then(r =>
-      console.log("logout"));
+  deleteCryptoCurrency(id: number){
+    const dialogRef = this.dialog.open(DialogComponent,{
+      data: {tittle: "Eliminar Criptomoneda",
+        type: "delete",
+        name: this.dataSource.data.find((crypto) => crypto.id === id)?.name}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined){
+        setTimeout(() => {
+          this.cryptoService.deleteCryptoCurrency(id);
+          this.cryptos$.subscribe((response) => {
+            this.dataSource.data =  response;
+            console.log(response);
+          });
+
+        }, 400);
+      }
+    });
   }
+
+
 
 
 

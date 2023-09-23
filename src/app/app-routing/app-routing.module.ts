@@ -4,6 +4,7 @@ import { MainComponent } from '../components/main/main.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ForbiddenComponent } from '../components/forbidden/forbidden.component';
 import {HomeComponent} from "../components/home/home.component";
+import {CryptoFormComponent} from "../components/crypto-form/crypto-form.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,14 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+  },
+  {
+    path: 'add-crypto',
+    component: CryptoFormComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['VIEW-CRYPTOS']
+    }
   }
 ];
 

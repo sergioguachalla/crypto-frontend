@@ -1,11 +1,20 @@
 
 <h1 mat-dialog-title>{{data.tittle}}</h1>
 <div mat-dialog-content>
-
+  <ng-container *ngIf="type!='delete'">
   <mat-form-field>
-    <mat-label>Ej: bitcoin</mat-label>
-    <input matInput [(ngModel)]="cryptoName">
+
+    <mat-label>{{type=="add" ? "Ej: bitcoin": "Precio: " }}</mat-label>
+    <input matInput [(ngModel)]="cryptoName" type="{{type}}">
+
+
+
   </mat-form-field>
+  </ng-container>
+  <ng-container *ngIf="type=='delete'">
+    <mat-label>¿Estás seguro de eliminar {{data.name}}?</mat-label>
+  </ng-container>
+
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onClose()">Cerrar</button>

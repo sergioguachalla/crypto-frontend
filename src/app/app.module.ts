@@ -12,7 +12,6 @@ import {MatButtonModule} from "@angular/material/button";
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {async} from "rxjs";
 import { HomeComponent } from './components/home/home.component';
 import {MatIconModule} from "@angular/material/icon";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
@@ -20,6 +19,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import {FormsModule} from "@angular/forms";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
+import {MatMenuModule} from "@angular/material/menu";
+import { CryptoFormComponent } from './components/crypto-form/crypto-form.component';
 function  initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -53,7 +54,8 @@ function  initializeKeycloak(keycloak: KeycloakService) {
     MainComponent,
     ForbiddenComponent,
     HomeComponent,
-    DialogComponent
+    DialogComponent,
+    CryptoFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ function  initializeKeycloak(keycloak: KeycloakService) {
     NgxSkeletonLoaderModule,
     FormsModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    MatMenuModule
   ],
   providers: [
     {
