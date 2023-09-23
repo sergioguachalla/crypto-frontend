@@ -36,7 +36,9 @@
   <ng-container matColumnDef="Editar">
     <mat-header-cell *matHeaderCellDef> Editar</mat-header-cell>
     <mat-cell *matCellDef="let crypto">
-      <button (click)="updateCryptoPrice(crypto.id)" >Edit</button>
+      <button (click)="updateCryptoPrice(crypto.id)" mat-icon-button>
+        <mat-icon>edit</mat-icon>
+      </button>
     </mat-cell>
   </ng-container>
 
@@ -44,7 +46,9 @@
     <mat-header-cell *matHeaderCellDef> Borrar</mat-header-cell>
 
     <mat-cell *matCellDef="let crypto">
-      <button >Delete</button>
+      <button (click)="updateCryptoPrice(crypto.id)" mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
     </mat-cell>
   </ng-container>
 
@@ -55,5 +59,6 @@
 
 </mat-table>
 <mat-paginator [pageSizeOptions]="[5]" [length]="maxSize" (page)="pageChangeEvent($event)" showFirstLastButtons></mat-paginator>
+<button (click)="logout()" mat-raised-button color="warn">Cerrar Sesión</button>
 
 

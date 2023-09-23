@@ -17,13 +17,7 @@ export class CryptoService {
   }
 
   getCryptocurrencies(page: number, size:number) {
-
-    let httpHeader = new HttpHeaders({
-      'Authorization': 'Bearer ' + localStorage.getItem('token')
-    }
-    );
-
-    return this.httpClient.get<ApiResponse<Paginator<Cryptocurrency>>>(`${this.API_URL}?page=${page}&size=${size}` , {headers: httpHeader})
+    return this.httpClient.get<ApiResponse<Paginator<Cryptocurrency>>>(`${this.API_URL}?page=${page}&size=${size}` )
       .pipe(
         tap((response) => {
 
@@ -34,26 +28,13 @@ export class CryptoService {
   }
 
 
-  /*
-  addCryptoCurrency(name: string): Observable<Cryptocurrency | null> {
-    return this.httpClient.post<ApiResponse<Cryptocurrency>>(this.API_URL, { name }).pipe(
-      map((response: ApiResponse<Cryptocurrency>) => response.response),
-      tap((crypto) => {
-        if (crypto) {
-          this.cryptoRepository.addCryptoCurrency(crypto as Cryptocurrency);
-        }
-      })
-    );
-  }
-
-   */
-
   addCryptoCurrency(name: string) {
     this.httpClient.post<ApiResponse<String>>(this.API_URL, {name}).pipe(
       map((response: ApiResponse<String>) => response.response)
     ).subscribe((response) => {
         alert(response);
-        this.getCryptocurrencies(0, 5).subscribe();
+        alert(this.cryptoRepository.getCurrencyProps().totalPages-1)
+        this.getCryptocurrencies(this.cryptoRepository.getCurrencyProps().totalPages-1, 5).subscribe();
       }
     );
   }

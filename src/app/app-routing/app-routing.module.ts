@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from '../components/main/main.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ForbiddenComponent } from '../components/forbidden/forbidden.component';
+import {HomeComponent} from "../components/home/home.component";
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'forbidden',
     component: ForbiddenComponent
+  },
+  {
+    path: '',
+    component: HomeComponent,
   }
 ];
 

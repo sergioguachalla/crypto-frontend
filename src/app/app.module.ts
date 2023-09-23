@@ -13,6 +13,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {async} from "rxjs";
+import { HomeComponent } from './components/home/home.component';
+import {MatIconModule} from "@angular/material/icon";
 function  initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -30,7 +32,7 @@ function  initializeKeycloak(keycloak: KeycloakService) {
         const { method, url } = request;
 
         const isGetRequest = 'GET' === method.toUpperCase();
-        const acceptablePaths = ['http://localhost:8081/api/v1/auth/token', 'http://localhost:8081/api/v1/cryptocurrency'];
+        const acceptablePaths = ['http://localhost:8081/api/v1/auth/token'];
         const isAcceptablePathMatch = acceptablePaths.some((path) =>
           url.includes(path)
         );
@@ -44,18 +46,20 @@ function  initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     MainComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    HomeComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-    HttpClientModule,
-    MatButtonModule,
-    KeycloakAngularModule,
-    AppRoutingModule,
-    MatPaginatorModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatTableModule,
+        HttpClientModule,
+        MatButtonModule,
+        KeycloakAngularModule,
+        AppRoutingModule,
+        MatPaginatorModule,
+        MatIconModule
+    ],
   providers: [
     {
       provide: APP_INITIALIZER,

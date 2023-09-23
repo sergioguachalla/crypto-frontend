@@ -1,0 +1,12 @@
+h1 {
+  text-align: center;
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+.col-md-6 {
+  float: left;
+  width: 50%;
+}

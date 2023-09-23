@@ -5,7 +5,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {Cryptocurrency} from "../../model/cryptocurrency";
 import {AuthService} from "../../services/auth.service";
-
+import {KeycloakService} from "keycloak-angular";
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -13,7 +13,7 @@ import {AuthService} from "../../services/auth.service";
 })
 export class MainComponent {
 
-
+  keycloakService: KeycloakService = inject(KeycloakService);
   cryptoService : CryptoService = inject(CryptoService);
   cryptocurrencyRepository: CryptocurrencyRepository = inject(CryptocurrencyRepository);
   authService : AuthService = inject(AuthService);
@@ -22,12 +22,14 @@ export class MainComponent {
   dataSource: MatTableDataSource<Cryptocurrency> = new MatTableDataSource<Cryptocurrency>([]);
   displayedColumns = ['Id', 'Name', 'Symbol', 'Current Price', 'Editar', 'Borrar'];
   cryptos$ = this.cryptocurrencyRepository.cryptos$;
+  isLoading = this.cryptocurrencyRepository.getUIState().isLoading;
   maxSize : number = 0;
 
   constructor() {
-    this.cryptoService.getCryptocurrencies(0, 5).subscribe();
   }
   ngOnInit() {
+    this.cryptoService.getCryptocurrencies(0, 5).subscribe();
+
     this.authService.getAccessToken();
 
     this.cryptos$
@@ -47,9 +49,7 @@ export class MainComponent {
 
   addCryptoCurrency() {
     const cryptoName = prompt("Ingrese el nombre de la criptomoneda");
-
     if (cryptoName !== null) {
-      console.log("Nombre de la criptomoneda ingresado:", cryptoName);
 
       (this.cryptoService.addCryptoCurrency(cryptoName));
 
@@ -62,6 +62,10 @@ export class MainComponent {
     this.cryptoService.updateCryptoCurrency(id, Number(newPrice));
   }
 
+  logout() {
+    this.keycloakService.logout().then(r =>
+      console.log("logout"));
+  }
 
 
 
