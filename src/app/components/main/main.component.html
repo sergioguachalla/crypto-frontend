@@ -2,18 +2,27 @@
 
 
 <div class="demo-button-container">
-  <button (click)="addCryptoCurrency()" mat-raised-button  class="demo-button">
-    Add data
+  <button (click)="addCryptoCurrencyDialog()" mat-raised-button  class="demo-button">
+    Añadir Criptomoneda
   </button>
 
 </div>
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<ng-container *ngIf="isLoading$">
+  <h3>Cargando los datos...</h3>
+  <ngx-skeleton-loader [theme]="{height: '20px', background: '#CED9DE'}"  ></ngx-skeleton-loader>
+
+</ng-container>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="!isLoading$">
   <!-- Position Column -->
   <ng-container matColumnDef="Id">
     <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-    <mat-cell *matCellDef="let crypto"> {{crypto.id}} </mat-cell>
 
+    <mat-cell *matCellDef="let crypto">
+      <div *ngIf="crypto">{{crypto.id}}</div>
+    </mat-cell>
   </ng-container>
+
 
   <!-- Name Column -->
   <ng-container matColumnDef="Name">
@@ -51,6 +60,7 @@
       </button>
     </mat-cell>
   </ng-container>
+
 
 
 

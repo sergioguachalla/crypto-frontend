@@ -15,6 +15,11 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {async} from "rxjs";
 import { HomeComponent } from './components/home/home.component';
 import {MatIconModule} from "@angular/material/icon";
+import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
+import { DialogComponent } from './components/dialog/dialog.component';
+import {FormsModule} from "@angular/forms";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {MatInputModule} from "@angular/material/input";
 function  initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -47,19 +52,24 @@ function  initializeKeycloak(keycloak: KeycloakService) {
     AppComponent,
     MainComponent,
     ForbiddenComponent,
-    HomeComponent
+    HomeComponent,
+    DialogComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        MatTableModule,
-        HttpClientModule,
-        MatButtonModule,
-        KeycloakAngularModule,
-        AppRoutingModule,
-        MatPaginatorModule,
-        MatIconModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    HttpClientModule,
+    MatButtonModule,
+    KeycloakAngularModule,
+    AppRoutingModule,
+    MatPaginatorModule,
+    MatIconModule,
+    NgxSkeletonLoaderModule,
+    FormsModule,
+    MatDialogModule,
+    MatInputModule
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,

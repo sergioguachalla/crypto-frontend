@@ -20,7 +20,7 @@ export interface CryptoProps {
 }
 
 export interface UIState {
-  isLoading: boolean;
+  loading: boolean;
   error: string | null;
 }
 
@@ -29,7 +29,7 @@ const store = createStore(
   {name : 'cryptocurrency'},
   withEntities<Cryptocurrency>(),
   withProps<CryptoProps>({totalElements: 0, totalPages: 0, currentPage: 0}),
-  withProps<UIState>({isLoading: false, error: null})
+  withProps<UIState>({loading: false, error: null}),
 );
 
 @Injectable({ providedIn: 'root' })
@@ -46,6 +46,13 @@ export class CryptocurrencyRepository {
     return store.query((state) => state);
   }
 
+  setUIState(isLoading: boolean, error: string | null) {
+    store.update(setProps({
+      loading: isLoading,
+      error: error
+    }));
+
+  }
 
   setCryptos(response: Paginator<Cryptocurrency>) {
 
@@ -54,7 +61,9 @@ export class CryptocurrencyRepository {
         currentPage: response.number,
         totalElements: response.totalElements,
         totalPages: response.totalPages,
+        loading: false
       })
+
     );
 
   }

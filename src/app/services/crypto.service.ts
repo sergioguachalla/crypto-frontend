@@ -17,11 +17,13 @@ export class CryptoService {
   }
 
   getCryptocurrencies(page: number, size:number) {
+
     return this.httpClient.get<ApiResponse<Paginator<Cryptocurrency>>>(`${this.API_URL}?page=${page}&size=${size}` )
       .pipe(
         tap((response) => {
 
           this.cryptoRepository.setCryptos(response.response)
+          this.cryptoRepository.setUIState(false, null);
         }
       )
       );
@@ -29,11 +31,11 @@ export class CryptoService {
 
 
   addCryptoCurrency(name: string) {
+
     this.httpClient.post<ApiResponse<String>>(this.API_URL, {name}).pipe(
       map((response: ApiResponse<String>) => response.response)
     ).subscribe((response) => {
         alert(response);
-        alert(this.cryptoRepository.getCurrencyProps().totalPages-1)
         this.getCryptocurrencies(this.cryptoRepository.getCurrencyProps().totalPages-1, 5).subscribe();
       }
     );

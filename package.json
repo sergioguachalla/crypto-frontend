@@ -26,6 +26,7 @@
     "@ngneat/elf-entities": "^4.5.0",
     "keycloak-angular": "^14.1.0",
     "keycloak-js": "^22.0.3",
+    "ngx-skeleton-loader": "^8.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

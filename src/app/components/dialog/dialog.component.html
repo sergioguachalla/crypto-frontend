@@ -1,0 +1,13 @@
+
+<h1 mat-dialog-title>{{data.tittle}}</h1>
+<div mat-dialog-content>
+
+  <mat-form-field>
+    <mat-label>Ej: bitcoin</mat-label>
+    <input matInput [(ngModel)]="cryptoName">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Cerrar</button>
+  <button mat-button (click)="onSave()">Ok</button>
+</div>
