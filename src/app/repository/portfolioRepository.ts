@@ -11,6 +11,7 @@ import {inject, Injectable} from "@angular/core";
 
 import {Cryptocurrency} from "../model/cryptocurrency";
 import {ApiResponse, Paginator} from "../model/paginator";
+import {Portfolio} from "../model/portfolio";
 
 
 export interface PortfolioProps {
@@ -21,7 +22,7 @@ export interface PortfolioProps {
 
 const store = createStore(
   {name : 'portfolio'},
-  withEntities<InvestmentPosition>(),
+  withEntities<Portfolio>(),
   withProps<PortfolioProps>({totalElements: 0, totalPages: 0, currentPage: 0}),
 );
 
@@ -33,7 +34,7 @@ export class PortfolioRepository {
     return store.query((state) => state);
   }
 
-  setPortfolio(response: Paginator<InvestmentPosition>) {
+  setPortfolio(response: Paginator<Portfolio>) {
     store.update(setEntities(response.content),
       setProps({
         totalElements: response.totalElements,

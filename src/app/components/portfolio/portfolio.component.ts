@@ -1,6 +1,10 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 import {PortfolioService} from "../../services/portfolio.service";
 import {PortfolioRepository} from "../../repository/portfolioRepository";
+import {MatTableDataSource} from "@angular/material/table";
+import {Portfolio} from "../../model/portfolio";
+import {KeycloakService} from "keycloak-angular";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-portfolio',
@@ -10,13 +14,32 @@ import {PortfolioRepository} from "../../repository/portfolioRepository";
 export class PortfolioComponent {
   portfolioService: PortfolioService = inject(PortfolioService);
   portfolioRepository: PortfolioRepository = inject(PortfolioRepository);
+  keycloakService: KeycloakService = inject(KeycloakService);
   portfolio$ = this.portfolioRepository.portfolio$;
   maxSize : number = 0;
-
+  // @ts-ignore
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: MatTableDataSource<Portfolio> = new MatTableDataSource<Portfolio>([]);
+  displayedColumns = ['Id', 'Cryptocurrency', 'Symbol', 'Amount', 'USD Amount', 'Opciones'];
+  userId = this.keycloakService.getKeycloakInstance().subject;
   constructor() {
   }
 
   ngOnInit() {
+    this.portfolioService.getPortfolio(0, 5).subscribe();
 
+    this.portfolio$
+      .subscribe((response) => {
+        const currencyProps = this.portfolioRepository.getPortfolioProps();
+        this.maxSize = Number(currencyProps.totalElements);
+
+        this.dataSource.data = response;
+        console.log(this.dataSource.data);
+      });
   }
+
+  pageChangeEvent($event: PageEvent) {
+    this.portfolioService.getPortfolio($event.pageIndex, 5).subscribe();
+  }
+
 }

@@ -1,1 +1,81 @@
-<p>portfolio works!</p>
+<h1>Portafolio de criptomendas</h1>
+
+
+<!--<div class="demo-button-container">-->
+
+<!--  <button mat-button [matMenuTriggerFor]="menu">Añadir Criptomoneda</button>-->
+<!--  <mat-menu #menu="matMenu">-->
+<!--    <button mat-menu-item [routerLink]="['/add-crypto']">Crear Criptomoneda</button>-->
+<!--    <button mat-menu-item (click)="addCryptoCurrencyDialog()">Añadir Criptomoneda</button>-->
+<!--  </mat-menu>-->
+<!--</div>-->
+<ng-container >
+
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+    <!-- Position Column -->
+    <ng-container matColumnDef="Id">
+      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+      <mat-cell *matCellDef="let portfolio">
+        <div *ngIf="portfolio">{{portfolio.id}}</div>
+      </mat-cell>
+    </ng-container>
+
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Cryptocurrency">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let portfolio"> {{portfolio.cryptocurrencyName}} </mat-cell>
+    </ng-container>
+
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="Symbol">
+      <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+      <mat-cell *matCellDef="let portfolio"> {{portfolio.cryptocurrencySymbol}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Amount">
+      <mat-header-cell *matHeaderCellDef> Current Price </mat-header-cell>
+      <mat-cell *matCellDef="let crypto"> {{crypto.totalAmount}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="USD Amount">
+      <mat-header-cell *matHeaderCellDef> Current Price </mat-header-cell>
+      <mat-cell *matCellDef="let crypto"> {{crypto.amountInUsd}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Opciones">
+      <mat-header-cell *matHeaderCellDef>Opciones</mat-header-cell>
+      <mat-cell *matCellDef="let crypto">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item >
+            <mat-icon>edit</mat-icon>
+            <span>Editar</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            <span>Borrar</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>add</mat-icon>
+            <span>Añadir a portafolio</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+</ng-container>
+
+
+
+<mat-paginator [pageSizeOptions]="[5]" [length]="maxSize" (page)="pageChangeEvent($event)" showFirstLastButtons></mat-paginator>
+
+

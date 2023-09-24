@@ -21,7 +21,6 @@ export class CryptoService {
     return this.httpClient.get<ApiResponse<Paginator<Cryptocurrency>>>(`${this.API_URL}?page=${page}&size=${size}` )
       .pipe(
         tap((response) => {
-
           this.cryptoRepository.setCryptos(response.response)
           this.cryptoRepository.setUIState(false, null);
         }

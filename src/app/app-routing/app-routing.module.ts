@@ -5,6 +5,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { ForbiddenComponent } from '../components/forbidden/forbidden.component';
 import {HomeComponent} from "../components/home/home.component";
 import {CryptoFormComponent} from "../components/crypto-form/crypto-form.component";
+import {PortfolioComponent} from "../components/portfolio/portfolio.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
     data: {
       roles: ['VIEW-CRYPTOS']
     }
+  },
+  {
+    path: 'portfolio',
+    component: PortfolioComponent,
   }
 ];
 
