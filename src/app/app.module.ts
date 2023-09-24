@@ -21,6 +21,7 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {MatMenuModule} from "@angular/material/menu";
 import { CryptoFormComponent } from './components/crypto-form/crypto-form.component';
+import { PortfolioComponent } from './components/portfolio/portfolio.component';
 function  initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -56,6 +57,7 @@ function  initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     DialogComponent,
     CryptoFormComponent,
+    PortfolioComponent,
   ],
   imports: [
     BrowserModule,

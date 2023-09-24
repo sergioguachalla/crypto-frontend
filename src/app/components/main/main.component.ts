@@ -7,6 +7,8 @@ import {Cryptocurrency} from "../../model/cryptocurrency";
 import {KeycloakService} from "keycloak-angular";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../dialog/dialog.component";
+import jwt_decode from "jwt-decode";
+import {UserService} from "../../services/user.service";
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -16,20 +18,21 @@ export class MainComponent {
   keycloakService: KeycloakService = inject(KeycloakService);
   cryptoService : CryptoService = inject(CryptoService);
   cryptocurrencyRepository: CryptocurrencyRepository = inject(CryptocurrencyRepository);
+  userService: UserService = inject(UserService);
+
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Cryptocurrency> = new MatTableDataSource<Cryptocurrency>([]);
-  displayedColumns = ['Id', 'Name', 'Symbol', 'Current Price', 'Editar', 'Borrar'];
+  displayedColumns = ['Id', 'Name', 'Symbol', 'Current Price', 'Opciones'];
   cryptos$ = this.cryptocurrencyRepository.cryptos$;
   isLoading$ = this.cryptocurrencyRepository.getUIState().loading;
   maxSize : number = 0;
-
+  userId: any | undefined;
   constructor(public dialog: MatDialog) {
   }
 
 
   ngOnInit() {
-
     this.cryptocurrencyRepository.setUIState(true, null);
     setTimeout(() => {
       this.cryptoService.getCryptocurrencies(0, 5).subscribe();
@@ -42,6 +45,8 @@ export class MainComponent {
         this.dataSource.data =  response;
         this.isLoading$ = isLoading;
       });
+    this.userService.registerUser().subscribe();
+
 
   }
   pageChangeEvent($event: PageEvent) {
@@ -89,7 +94,6 @@ export class MainComponent {
         type: "delete",
         name: this.dataSource.data.find((crypto) => crypto.id === id)?.name}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if(result !== undefined){
         setTimeout(() => {
@@ -102,6 +106,12 @@ export class MainComponent {
         }, 400);
       }
     });
+  }
+  getUsernameFromToken(token: string | undefined) {
+    const jwt = this.keycloakService.getKeycloakInstance().token;
+    // @ts-ignore
+    return jwt_decode(jwt)["preferred_username"];
+
   }
 
 

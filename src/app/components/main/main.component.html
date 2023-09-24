@@ -1,5 +1,5 @@
 <h1>Lista de Criptomonedas</h1>
-
+hola {{userId}}
 
 <div class="demo-button-container">
 
@@ -9,11 +9,6 @@
     <button mat-menu-item (click)="addCryptoCurrencyDialog()">Añadir Criptomoneda</button>
   </mat-menu>
 </div>
-<!--<ng-container *ngIf="isLoading$">-->
-<!--  <h3>Cargando los datos...</h3>-->
-<!--  <ngx-skeleton-loader [theme]="{height: '20px', background: '#CED9DE'}"  ></ngx-skeleton-loader>-->
-<!--</ng-container>-->
-
 <ng-container *ngIf="!isLoading$">
 
 <mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="!isLoading$">
@@ -44,24 +39,29 @@
     <mat-cell *matCellDef="let crypto"> {{crypto.currentPrice}} </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="Editar">
-    <mat-header-cell *matHeaderCellDef> Editar</mat-header-cell>
+  <ng-container matColumnDef="Opciones">
+    <mat-header-cell *matHeaderCellDef>Opciones</mat-header-cell>
     <mat-cell *matCellDef="let crypto">
-      <button (click)="updateCryptoPrice(crypto.id)" mat-icon-button>
-        <mat-icon>edit</mat-icon>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
       </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="updateCryptoPrice(crypto.id)">
+          <mat-icon>edit</mat-icon>
+          <span>Editar</span>
+        </button>
+        <button mat-menu-item (click)="deleteCryptoCurrency(crypto.id)">
+          <mat-icon>delete</mat-icon>
+          <span>Borrar</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>add</mat-icon>
+          <span>Añadir a portafolio</span>
+        </button>
+      </mat-menu>
     </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="Borrar">
-    <mat-header-cell *matHeaderCellDef> Borrar</mat-header-cell>
-
-    <mat-cell *matCellDef="let crypto">
-      <button (click)="deleteCryptoCurrency(crypto.id)" mat-icon-button>
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-cell>
-  </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

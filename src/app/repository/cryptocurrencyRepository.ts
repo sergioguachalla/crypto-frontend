@@ -68,22 +68,6 @@ export class CryptocurrencyRepository {
 
   }
 
-  updateCryptoCurrency( response: Paginator<Cryptocurrency>) {
-    store.update(upsertEntities(response.content),
-      setProps({
-        currentPage: response.number,
-        totalElements: response.totalElements,
-        totalPages: response.totalPages,
-        loading: false
-      })
-
-    );
-
-  }
-
-  deleteCryptoCurrency(crypto: Cryptocurrency) {
-    store.update(updateEntities(crypto.id, (entity) => ({...entity, status: false})));
-  }
 
 }
 
