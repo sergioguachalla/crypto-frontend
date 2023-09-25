@@ -28,7 +28,7 @@ export class TransactionDialogComponent {
 
     const formattedDate = datePipe.transform(new Date(), 'dd-MM-yyyy');
     this.dialogRef.close({type: this.type, amount: this.amount, selected: this.selected,
-      id: this.id+1, date: formattedDate});
+      id: this.id+1, date: new Date()});
 
   }
 

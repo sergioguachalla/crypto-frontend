@@ -25,6 +25,8 @@ import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { BuySellDialogComponent } from './components/buy-sell-dialog/buy-sell-dialog.component';
 import { MementoComponent } from './components/memento/memento.component';
 import { TransactionDialogComponent } from './components/transaction-dialog/transaction-dialog.component';
+
+
 function  initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({

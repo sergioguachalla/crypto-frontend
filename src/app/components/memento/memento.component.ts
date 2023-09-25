@@ -5,7 +5,7 @@ import {CryptoService} from "../../services/crypto.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {Transaction} from "../../model/transaction";
 import {Memento} from "../../memento/memento";
-
+import {TransactionService} from "../../services/transaction.service";
 
 //Este es el caretaker
 @Component({
@@ -16,7 +16,7 @@ import {Memento} from "../../memento/memento";
 export class MementoComponent {
   transactions: Transaction[] = [];
   mementos: Memento[] = [new Memento([])];
-
+  transactionService : TransactionService = inject(TransactionService);
   dataSource: MatTableDataSource<Transaction> = new MatTableDataSource<Transaction>(this.transactions);
   displayedColumns: string[] = ['Id', 'Cryptocurrency', 'Date', 'Type', 'Amount', 'Price'];
   constructor(public dialog: MatDialog, ) {
@@ -31,8 +31,6 @@ export class MementoComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.transactions.push(result);
-
-        // Comparamos la lista de transacciones actual con la lista de transacciones del último memento
 
         const memento = new Memento([...this.transactions]); // Copia independiente de las transacciones
         this.mementos.push(memento);
@@ -59,6 +57,12 @@ export class MementoComponent {
       console.log(this.transactions);
       this.updateDataSource(this.transactions);
     }
+
+  }
+
+  saveChanges() {
+   this.transactionService.saveChanges(this.transactions);
+
 
   }
 }

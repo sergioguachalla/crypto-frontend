@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {PortfolioRepository} from "../repository/portfolioRepository";
 import {KeycloakService} from "keycloak-angular";
 import {HttpClient} from "@angular/common/http";
+import {Transaction, TransactionDto} from "../model/transaction";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class TransactionService {
     let date = new Date();
     let transaction = {
       "quantity": amount,
-      "date": date,
+      "date": new Date(),
       "type": "BUY",
       "userId": this.userId,
       "cryptocurrencyId": cryptoId
@@ -30,6 +31,28 @@ export class TransactionService {
       },
       (error) => {
         console.log(error);
+      }
+    );
+  }
+
+  saveChanges(transactions: Transaction[]) {
+
+    const transactionsDto: TransactionDto[] = transactions.map((transaction: Transaction) => {
+      return {
+        keycloakUserId: this.keycloakService.getKeycloakInstance().subject,
+        cryptoName: transaction.selected,
+        date: transaction.date,
+        type: transaction.type,
+        quantity: transaction.amount,
+        price: transaction.amount * 0.054
+      }
+    });
+    console.log(transactionsDto)
+
+
+    this.http.post(this.API_URL + "transactions/memento",transactionsDto ).subscribe(
+      (response: any) => {
+        console.log(response);
       }
     );
   }

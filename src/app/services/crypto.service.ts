@@ -5,11 +5,13 @@ import {Cryptocurrency} from "../model/cryptocurrency";
 import {ApiResponse} from "../model/paginator";
 import {CryptocurrencyRepository} from "../repository/cryptocurrencyRepository";
 import {Paginator} from "../model/paginator";
+import {environment} from "../../environments/environment.development";
 @Injectable({
   providedIn: 'root'
 })
 export class CryptoService {
-  API_URL = 'http://localhost:8081/api/v1/cryptocurrency';
+  //API_URL = 'http://localhost:8081/api/v1/cryptocurrency';
+  API_URL= environment.api_url;
   private httpClient: HttpClient = inject(HttpClient);
   private cryptoRepository: CryptocurrencyRepository = inject(CryptocurrencyRepository);
   constructor() {
@@ -18,7 +20,7 @@ export class CryptoService {
 
   getCryptocurrencies(page: number, size:number) {
 
-    return this.httpClient.get<ApiResponse<Paginator<Cryptocurrency>>>(`${this.API_URL}?page=${page}&size=${size}` )
+    return this.httpClient.get<ApiResponse<Paginator<Cryptocurrency>>>(`${this.API_URL}cryptocurrency?page=${page}&size=${size}` )
       .pipe(
         tap((response) => {
           this.cryptoRepository.setCryptos(response.response)
@@ -52,7 +54,7 @@ export class CryptoService {
 
   updateCryptoCurrency(cryptoId: number, price: number) {
     this.httpClient
-      .put<ApiResponse<String>>(`${this.API_URL}/${cryptoId}/price`, {
+      .put<ApiResponse<String>>(`${this.API_URL}cryptocurrency/${cryptoId}/price`, {
         currentPrice: price,
       })
       .pipe(
@@ -67,7 +69,7 @@ export class CryptoService {
 
   deleteCryptoCurrency(cryptoId: number) {
     this.httpClient
-      .put<ApiResponse<String>>(`${this.API_URL}/${cryptoId}`, {
+      .put<ApiResponse<String>>(`${this.API_URL}cryptocurrency/${cryptoId}`, {
         id: cryptoId,
       })
       .pipe(
