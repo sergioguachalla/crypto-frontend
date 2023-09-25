@@ -18,14 +18,15 @@ export class MementoComponent {
   mementos: Memento[] = [new Memento([])];
   transactionService : TransactionService = inject(TransactionService);
   dataSource: MatTableDataSource<Transaction> = new MatTableDataSource<Transaction>(this.transactions);
-  displayedColumns: string[] = ['Id', 'Cryptocurrency', 'Date', 'Type', 'Amount', 'Price'];
+  displayedColumns: string[] = ['Id', 'Cryptocurrency', 'Date', 'Type', 'Amount'];
   constructor(public dialog: MatDialog, ) {
 
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(TransactionDialogComponent, {
-      width: '250px'
+      width: '300px',
+      height: '400px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -34,8 +35,6 @@ export class MementoComponent {
 
         const memento = new Memento([...this.transactions]); // Copia independiente de las transacciones
         this.mementos.push(memento);
-
-
 
         // Actualizamos la tabla
         this.updateDataSource(this.transactions);

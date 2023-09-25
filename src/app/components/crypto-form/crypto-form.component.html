@@ -1,23 +1,29 @@
 <div class="form-container">
   <h1>Añadir criptomoneda</h1>
 
-  <form (ngSubmit)="onSubmit()">
+  <!-- crypto-form.component.html -->
+
+  <form [formGroup]="cryptoForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
-      <mat-label>Nombre de la criptomoneda</mat-label>
-      <input matInput type="text" [(ngModel)]="formData.name" name="symbol">
+      <input matInput formControlName="name" placeholder="Nombre">
+      <mat-error *ngIf="cryptoForm.get('name')">El nombre es requerido</mat-error>
+      <mat-error *ngIf="cryptoForm.get('name')">El nombre debe tener al menos 3 caracteres</mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Símbolo</mat-label>
-      <input matInput type="text" [(ngModel)]="formData.symbol" name="name">
+      <input matInput formControlName="symbol" placeholder="Símbolo">
+      <mat-error *ngIf="cryptoForm.get('symbol')">El símbolo es requerido</mat-error>
+      <mat-error *ngIf="cryptoForm.get('symbol')">El símbolo debe tener al menos 3 caracteres</mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Precio Actual (USD)</mat-label>
-      <input matInput type="text" [(ngModel)]="formData.currentPrice" name="description">
+      <input matInput formControlName="currentPrice" type="number" placeholder="Precio Actual">
+      <mat-error *ngIf="cryptoForm.get('currentPrice')">El precio actual es requerido</mat-error>
+      <mat-error *ngIf="cryptoForm.get('currentPrice')">El precio actual no puede ser negativo</mat-error>
     </mat-form-field>
 
+    <button class="btn btn-primary" type="submit" [disabled]="!cryptoForm.valid">Guardar</button>
 
-    <button mat-raised-button type="submit">Enviar</button>
   </form>
+
 </div>

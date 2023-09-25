@@ -16,7 +16,7 @@ import { HomeComponent } from './components/home/home.component';
 import {MatIconModule} from "@angular/material/icon";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import { DialogComponent } from './components/dialog/dialog.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {MatMenuModule} from "@angular/material/menu";
@@ -89,6 +89,7 @@ function  initializeKeycloak(keycloak: KeycloakService) {
     MatMenuModule,
     RouterModule,
     MatToolbarModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

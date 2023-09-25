@@ -1,13 +1,69 @@
 <h1>Página de inicio de criptomonedas</h1>
 
-<div class="row">
-  <div class="col-md-6">
-    <button mat-raised-button color="primary" routerLink="/crypto-list">Lista de Criptomonedas</button>
-  </div>
-  <div class="col-md-6">
-    <button mat-raised-button color="primary" routerLink="/portfolio">Tradear</button>
-  </div>
-  <div class="col-md-6">
-    <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+<!--<div class="row">-->
+<!--  <div class="col-md-6 text-center">-->
+<!--    <div class="container" style="background: blanchedalmond; width: 200px; height: 200px" > &lt;!&ndash; Añadido el contenedor 'container' &ndash;&gt;-->
+<!--      <div> &lt;!&ndash; Nuevo div para la imagen &ndash;&gt;-->
+<!--        <img src="assets/crypto_list.png" alt="Imagen" style="width: 128px; height: 128px">-->
+<!--      </div>-->
+<!--      <button mat-raised-button color="primary" routerLink="/crypto-list">-->
+<!--        Lista de Criptomonedas-->
+
+<!--      </button>-->
+
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="col-md-6 text-center">-->
+<!--    <div class="container"> &lt;!&ndash; Añadido el contenedor 'container' &ndash;&gt;-->
+<!--      <button mat-raised-button color="primary" routerLink="/portfolio">-->
+<!--        Tradear-->
+<!--        <div> &lt;!&ndash; Nuevo div para la imagen &ndash;&gt;-->
+<!--          <img src="ruta_de_la_imagen" alt="Imagen">-->
+<!--        </div>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="col-md-6 text-center">-->
+<!--    <div class="container"> &lt;!&ndash; Añadido el contenedor 'container' &ndash;&gt;-->
+<!--      <button mat-raised-button color="warn" (click)="logout()">-->
+<!--        Logout-->
+<!--        <div> &lt;!&ndash; Nuevo div para la imagen &ndash;&gt;-->
+<!--          <img src="ruta_de_la_imagen" alt="Imagen">-->
+<!--        </div>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="container" style="padding-top: 64px">
+  <div class="row justify-content-center">
+
+    <div class="col-md-3" style="align-items: center">
+      <div class="card" style="width: 14rem;">
+        <img src="assets/crypto_list.png" class="card-img-top" style="width: 7rem; align-self: center; padding: 12px" >
+        <div class="card-body">
+          <a routerLink="/crypto-list" class="btn btn-primary" style="width: 140px;font-size:14px; align-self: center">Criptomonedas</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card" style="width: 14rem;">
+        <img src="assets/catalog.png" class="card-img-top" style="width: 7rem; align-self: center; padding: 12px" >
+        <div class="card-body">
+          <a routerLink="/portfolio" class="btn btn-primary" style="width: 140px;font-size:14px; justify-self: center">Portafolio</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card" style="width: 14rem;">
+        <img src="assets/trade.png" class="card-img-top" style="width: 7rem; align-self: center; padding: 12px" >
+        <div class="card-body">
+          <a routerLink="/memento" class="btn btn-primary" style="width: 130px;font-size:14px; justify-self: center">Tradear</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+

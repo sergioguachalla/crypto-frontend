@@ -1,10 +1,14 @@
-<p>memento works!</p>
-<button (click)="openDialog()">Añadir transacción</button>
-<button (click)="restoreState()">Deshacer cambios</button>
-<button (click)="saveChanges()">Guardar cambios</button>
-<ng-container >
+<h1 class="tittle" style="margin-bottom: 48px; margin-top: 48px; justify-self: center">Transacciones</h1>
+<div class="btn-group" role="group" aria-label="Basic example" style="margin-bottom: 24px">
+  <button type="button" class="btn btn-primary" (click)="openDialog()">Añadir transacción</button>
+  <button type="button" class="btn btn-secondary" (click)="restoreState()">Deshacer cambios</button>
+  <button type="button" class="btn btn-success" (click)="saveChanges()">Guardar cambios</button>
+</div>
+
+<ng-container *ngIf="dataSource.data.length > 0">
 
   <mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+
     <!-- Position Column -->
     <ng-container matColumnDef="Id">
       <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
@@ -32,14 +36,14 @@
       <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
       <mat-cell *matCellDef="let crypto"> {{crypto.amount}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="Price">
-      <mat-header-cell *matHeaderCellDef> Current Price </mat-header-cell>
-      <mat-cell *matCellDef="let crypto"> {{crypto.price}} </mat-cell>
-    </ng-container>
-
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
   </mat-table>
+</ng-container>
+<ng-container *ngIf="dataSource.data.length== 0">
+  <div class="alert alert-warning" role="alert">
+    No hay transacciones registradas
+  </div>
 </ng-container>
