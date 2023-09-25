@@ -22,7 +22,7 @@ export class PortfolioComponent {
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Portfolio> = new MatTableDataSource<Portfolio>([]);
-  displayedColumns = ['Id', 'Cryptocurrency', 'Symbol', 'Amount', 'USD Amount', 'Opciones'];
+  displayedColumns = ['Id', 'Cryptocurrency', 'Symbol', 'Amount', 'USD Amount'];
   userId = this.keycloakService.getKeycloakInstance().subject;
   constructor(public dialog: MatDialog) {
   }

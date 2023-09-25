@@ -3,6 +3,7 @@ import {PortfolioRepository} from "../repository/portfolioRepository";
 import {KeycloakService} from "keycloak-angular";
 import {HttpClient} from "@angular/common/http";
 import {Transaction, TransactionDto} from "../model/transaction";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class TransactionService {
   keycloakService: any = inject(KeycloakService);
   portfolioRepo: PortfolioRepository = inject(PortfolioRepository)
   userId = this.keycloakService.getKeycloakInstance().subject;
-  API_URL = "http://localhost:8081/api/v1/";
+  API_URL = environment.API_URL;
   http: HttpClient = inject(HttpClient);
   constructor() { }
 

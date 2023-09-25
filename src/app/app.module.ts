@@ -25,13 +25,17 @@ import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { BuySellDialogComponent } from './components/buy-sell-dialog/buy-sell-dialog.component';
 import { MementoComponent } from './components/memento/memento.component';
 import { TransactionDialogComponent } from './components/transaction-dialog/transaction-dialog.component';
+import {environment} from "../environments/environment";
+import {RouterLink, RouterModule} from "@angular/router";
+import { NavbarComponent } from './components/navbar/navbar.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 
 function  initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://localhost:8080',
+        url: environment.KEYCLOAK_URL,
         realm: 'arquitectura',
         clientId: 'frontend'
       },
@@ -44,7 +48,7 @@ function  initializeKeycloak(keycloak: KeycloakService) {
         const { method, url } = request;
 
         const isGetRequest = 'GET' === method.toUpperCase();
-        const acceptablePaths = ['http://localhost:8081/api/v1/auth/token'];
+        const acceptablePaths = ['http://localhost:8081/api/v1/auth/token','http://host.docker.internal:8081/api/v1/auth/token'];
         const isAcceptablePathMatch = acceptablePaths.some((path) =>
           url.includes(path)
         );
@@ -66,6 +70,7 @@ function  initializeKeycloak(keycloak: KeycloakService) {
     BuySellDialogComponent,
     MementoComponent,
     TransactionDialogComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,7 +86,9 @@ function  initializeKeycloak(keycloak: KeycloakService) {
     FormsModule,
     MatDialogModule,
     MatInputModule,
-    MatMenuModule
+    MatMenuModule,
+    RouterModule,
+    MatToolbarModule,
   ],
   providers: [
     {

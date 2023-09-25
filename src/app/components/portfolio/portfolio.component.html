@@ -38,29 +38,8 @@
       <mat-cell *matCellDef="let crypto"> {{crypto.totalAmount}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="USD Amount">
-      <mat-header-cell *matHeaderCellDef> Current Price </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Amount in USD </mat-header-cell>
       <mat-cell *matCellDef="let crypto"> {{crypto.amountInUsd}} </mat-cell>
-    </ng-container>
-
-
-    <ng-container matColumnDef="Opciones">
-      <mat-header-cell *matHeaderCellDef>Opciones</mat-header-cell>
-      <mat-cell *matCellDef="let crypto">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="buyCryptoCurrencyDialog()" >
-            <mat-icon>attach_money</mat-icon>
-            <span>Comprar</span>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>sell</mat-icon>
-            <span>Vender</span>
-          </button>
-
-        </mat-menu>
-      </mat-cell>
     </ng-container>
 
 

@@ -1,0 +1,27 @@
+.my-navbar {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.my-navbar h1 {
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.my-navbar a {
+  color: #000;
+}
+
+.my-navbar a:hover {
+  color: #fff;
+}
+
+.user-info {
+  float: right;
+}
+
+.user-info span {
+  font-size: 1rem;
+}

@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  api_url: 'http://localhost:8081/api/v1/',
+  API_URL: 'http://localhost:8081/api/v1/',
+  KEYCLOAK_URL: 'http://localhost:8080',
 };

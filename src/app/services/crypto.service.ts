@@ -5,13 +5,13 @@ import {Cryptocurrency} from "../model/cryptocurrency";
 import {ApiResponse} from "../model/paginator";
 import {CryptocurrencyRepository} from "../repository/cryptocurrencyRepository";
 import {Paginator} from "../model/paginator";
-import {environment} from "../../environments/environment.development";
+import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
 export class CryptoService {
   //API_URL = 'http://localhost:8081/api/v1/cryptocurrency';
-  API_URL= environment.api_url;
+  API_URL= environment.API_URL;
   private httpClient: HttpClient = inject(HttpClient);
   private cryptoRepository: CryptocurrencyRepository = inject(CryptocurrencyRepository);
   constructor() {
@@ -32,7 +32,7 @@ export class CryptoService {
 
 
   getAllCryptocurrencies(): Observable<string[]> {
-    return this.httpClient.get<ApiResponse<Cryptocurrency[]>>(this.API_URL + '/all').pipe(
+    return this.httpClient.get<ApiResponse<Cryptocurrency[]>>(this.API_URL + 'cryptocurrency/all').pipe(
       map((response: ApiResponse<Cryptocurrency[]>) => {
         return response.response.map((crypto: Cryptocurrency) => crypto.name);
       })
@@ -41,7 +41,7 @@ export class CryptoService {
 
   addCryptoCurrency(name: string) {
 
-    this.httpClient.post<ApiResponse<String>>(this.API_URL, {name}).pipe(
+    this.httpClient.post<ApiResponse<String>>(`${this.API_URL}cryptocurrency`, {name}).pipe(
       map((response: ApiResponse<String>) => response.response)
     ).subscribe((response) => {
         alert(response);
@@ -49,6 +49,19 @@ export class CryptoService {
       }
     );
   }
+
+  createCryptoCurrency(name: String, symbol: String, currentPrice:number){
+    this.httpClient.post<ApiResponse<String>>(`${this.API_URL}cryptocurrency/custom`, {name, symbol, currentPrice}).pipe(
+      map((response: ApiResponse<String>) => response.response)
+    ).subscribe((response) => {
+      alert(response);
+        this.getCryptocurrencies(this.cryptoRepository.getCurrencyProps().totalPages-1, 5).subscribe();
+      }
+
+    );
+  }
+
+
 
 
 

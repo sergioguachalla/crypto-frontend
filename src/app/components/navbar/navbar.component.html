@@ -1,0 +1,9 @@
+<mat-toolbar color="primary" class="my-navbar">
+  <h1 mat-toolbar-title>Mi aplicación Angular</h1>
+  <a mat-button href="#">Inicio</a>
+  <a mat-button href="#">Acerca de</a>
+  <div class="user-info" display="flex" justify-content="end">
+    <span>{{username}}</span>
+    <button mat-button (click)="logout()">Cerrar sesión</button>
+  </div>
+</mat-toolbar>

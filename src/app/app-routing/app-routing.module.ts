@@ -30,7 +30,7 @@ const routes: Routes = [
     component: CryptoFormComponent,
     canActivate: [AuthGuard],
     data: {
-      roles: ['VIEW-CRYPTOS']
+      roles: ['ADMIN-FRONT']
     }
   },
   {

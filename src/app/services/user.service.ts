@@ -2,13 +2,14 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {KeycloakService} from "keycloak-angular";
 import jwt_decode from "jwt-decode";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   httpClient: HttpClient = inject(HttpClient);
-  API_URL: string = "http://localhost:8081/api/v1";
+  API_URL: string = environment.API_URL;
   keycloakService: KeycloakService = inject(KeycloakService);
   constructor() { }
 
@@ -16,7 +17,7 @@ export class UserService {
     const username = this.getUsernameFromToken(this.keycloakService.getKeycloakInstance().token);
     const name = this.getFullNameFromToken(this.keycloakService.getKeycloakInstance().token);
     const keyCloakId = this.keycloakService.getKeycloakInstance().subject;
-    return this.httpClient.post(`${this.API_URL}/user`, {
+    return this.httpClient.post(`${this.API_URL}user`, {
       "username": username,
       "name": name,
       "keyCloakId": keyCloakId
