@@ -22,10 +22,7 @@ export class PortfolioService {
       .pipe(
 
         tap((response) => {
-
-            this.portfolioRepository.setPortfolio(response.response)
-          console.log(response.response);
-
+          this.portfolioRepository.setPortfolio(response.response)
 
           }
         )

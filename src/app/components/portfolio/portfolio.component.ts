@@ -5,6 +5,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {Portfolio} from "../../model/portfolio";
 import {KeycloakService} from "keycloak-angular";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
+import {MatDialog} from "@angular/material/dialog";
+import {BuySellDialogComponent} from "../buy-sell-dialog/buy-sell-dialog.component";
 
 @Component({
   selector: 'app-portfolio',
@@ -22,7 +24,7 @@ export class PortfolioComponent {
   dataSource: MatTableDataSource<Portfolio> = new MatTableDataSource<Portfolio>([]);
   displayedColumns = ['Id', 'Cryptocurrency', 'Symbol', 'Amount', 'USD Amount', 'Opciones'];
   userId = this.keycloakService.getKeycloakInstance().subject;
-  constructor() {
+  constructor(public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -42,4 +44,17 @@ export class PortfolioComponent {
     this.portfolioService.getPortfolio($event.pageIndex, 5).subscribe();
   }
 
+  buyCryptoCurrencyDialog() {
+    const dialogRef = this.dialog.open(BuySellDialogComponent,{
+      data: {tittle: "Comprar",
+        type: "BUY"}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined){
+        console.log(result);
+      }
+    }
+    );
+
+    }
 }

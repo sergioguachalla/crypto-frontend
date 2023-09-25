@@ -29,6 +29,14 @@ export class CryptoService {
   }
 
 
+  getAllCryptocurrencies(): Observable<string[]> {
+    return this.httpClient.get<ApiResponse<Cryptocurrency[]>>(this.API_URL + '/all').pipe(
+      map((response: ApiResponse<Cryptocurrency[]>) => {
+        return response.response.map((crypto: Cryptocurrency) => crypto.name);
+      })
+    );
+  }
+
   addCryptoCurrency(name: string) {
 
     this.httpClient.post<ApiResponse<String>>(this.API_URL, {name}).pipe(

@@ -1,0 +1,29 @@
+<h2>Nueva Transacción</h2>
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label for="cryptocurrency">Criptomoneda</label>
+    <select [(ngModel)]="selected" name="cryptocurrency" required>
+      <option *ngFor="let crypto of cryptoNames" [value]="crypto">{{ crypto }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Tipo de Operación</label>
+    <label>
+      <input type="radio" [(ngModel)]="type" name="tipoOperacion" value="SELL" required>
+      Venta
+    </label>
+    <label>
+      <input type="radio" [(ngModel)]="type" name="tipoOperacion" value="BUY" required>
+      Compra
+    </label>
+  </div>
+
+  <div>
+    <label for="amount">Monto</label>
+    <input type="number" [(ngModel)]="amount" name="amount" required>
+  </div>
+
+  <button type="button" (click)="onCancel()">Cancelar</button>
+  <button type="submit">Enviar</button>
+</form>

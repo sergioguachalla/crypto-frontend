@@ -33,6 +33,7 @@ export class MainComponent {
 
 
   ngOnInit() {
+    this.cryptoService.getAllCryptocurrencies();
     this.cryptocurrencyRepository.setUIState(true, null);
     setTimeout(() => {
       this.cryptoService.getCryptocurrencies(0, 5).subscribe();

@@ -6,6 +6,7 @@ import { ForbiddenComponent } from '../components/forbidden/forbidden.component'
 import {HomeComponent} from "../components/home/home.component";
 import {CryptoFormComponent} from "../components/crypto-form/crypto-form.component";
 import {PortfolioComponent} from "../components/portfolio/portfolio.component";
+import {MementoComponent} from "../components/memento/memento.component";
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: 'portfolio',
     component: PortfolioComponent,
+  },
+  {
+    path: 'memento',
+    component: MementoComponent,
   }
 ];
 

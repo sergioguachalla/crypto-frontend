@@ -20,10 +20,9 @@
       </mat-cell>
     </ng-container>
 
-
     <!-- Name Column -->
     <ng-container matColumnDef="Cryptocurrency">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Cryptocurrency </mat-header-cell>
       <mat-cell *matCellDef="let portfolio"> {{portfolio.cryptocurrencyName}} </mat-cell>
     </ng-container>
 
@@ -51,18 +50,15 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item >
-            <mat-icon>edit</mat-icon>
-            <span>Editar</span>
+          <button mat-menu-item (click)="buyCryptoCurrencyDialog()" >
+            <mat-icon>attach_money</mat-icon>
+            <span>Comprar</span>
           </button>
           <button mat-menu-item>
-            <mat-icon>delete</mat-icon>
-            <span>Borrar</span>
+            <mat-icon>sell</mat-icon>
+            <span>Vender</span>
           </button>
-          <button mat-menu-item>
-            <mat-icon>add</mat-icon>
-            <span>Añadir a portafolio</span>
-          </button>
+
         </mat-menu>
       </mat-cell>
     </ng-container>
@@ -73,6 +69,8 @@
 
   </mat-table>
 </ng-container>
+
+<button mat-button color="primary" routerLink="/memento">Realizar transacción</button>
 
 
 
